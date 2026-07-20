@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GENAI Academic Helpdesk</title>
+<style>
+
+    *{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+
+background:linear-gradient(to right,#acdbfb,#ffffff,#8fd3ff);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+
+}
+
+.container{
+
+width:700px;
+background:#fff;
+border-radius:15px;
+padding:20px;
+box-shadow:0 10px 20px rgba(0,0,0,.2);
+
+}
+
+h1{
+
+text-align:center;
+color:#3d4db7;
+
+}
+
+.subtitle{
+
+text-align:center;
+margin-top:5px;
+color:gray;
+
+}
+
+.buttons{
+
+display:flex;
+justify-content:center;
+gap:15px;
+margin:20px 0;
+
+}
+
+.buttons button{
+
+background:#4f6df5;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:30px;
+cursor:pointer;
+transition:.3s;
+
+}
+
+.buttons button:hover{
+
+background:#2d4be7;
+
+}
+
+.chat-box{
+
+height:380px;
+border:1px solid #ddd;
+border-radius:12px;
+padding:15px;
+overflow-y:auto;
+background:#f9f9f9;
+
+}
+
+.bot-msg{
+
+background:#fff;
+padding:15px;
+border-radius:10px;
+width:300px;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
+
+}
+
+.user-msg{
+
+background:#53c58c;
+color:white;
+padding:12px;
+border-radius:10px;
+margin-top:15px;
+margin-left:auto;
+width:max-content;
+max-width:250px;
+
+}
+
+.input-area{
+
+display:flex;
+margin-top:20px;
+
+}
+
+.input-area input{
+
+flex:1;
+padding:15px;
+border-radius:30px;
+border:1px solid #ccc;
+font-size:16px;
+
+}
+
+.input-area button{
+
+margin-left:10px;
+padding:15px 25px;
+border:none;
+border-radius:30px;
+background:#ff4b91;
+color:white;
+cursor:pointer;
+font-size:16px;
+
+}
+
+.input-area button:hover{
+
+background:#ff2878;
+
+}
+
+ul{
+
+margin-top:10px;
+margin-left:20px;
+
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>GENAI Academic Helpdesk</h1>
+    <p class="subtitle">Your Intelligent Campus Assistant</p>
+
+    <div class="buttons">
+
+          <button onclick="setQuestion('what is library timing')">Library</button>
+          <button onclick="setQuestion('what is placement eligibility')">Placement</button>
+          <button onclick="setQuestion('what are hostel rules')">Hostel</button>
+          <button onclick="setQuestion('when do exams start')">Exams</button>    </div>
+
+    <div class="chat-box" id="chatBox">
+
+        <div class="bot-msg">
+            👋 Hello! I am your GENAI Academic Assistant.
+            <br><br>
+
+            Ask anything about:
+            <ul>
+                <li>📚 Library</li>
+                <li>💼 Placements</li>
+                <li>🏠 Hostel</li>
+                <li>📝 Exams</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="input-area">
+        <input
+        type="text"
+        id="question"
+        placeholder="Ask your question...">
+
+        <button onClick="ask()">send</button>
+    </div>
+
+</div>
+
+<script>
+// Put button question into input box
+function setQuestion(text) {
+    document.getElementById("question").value = text;
+}
+
+// Send question
+function ask() {
+
+    const input = document.getElementById("question");
+    const chatBox = document.getElementById("chatBox");
+
+    const question = input.value.trim();
+
+    if (question === "") {
+        alert("Please enter a question.");
+        return;
+    }
+
+    // Show user message
+    chatBox.innerHTML += `
+        <div class="user-msg">
+            ${question}
+        </div>
+    `;
+
+    // Get answer
+    let answer = "";
+
+    const q = question.toLowerCase();
+
+    if (q.includes("library")) {
+        answer = `
+        📚 <b>Library Timings</b><br><br>
+        • Monday - Friday : 8:00 AM - 8:00 PM<br>
+        • Saturday : 9:00 AM - 5:00 PM<br>
+        • Sunday : Closed
+        `;
+    }
+
+    else if (q.includes("placement")) {
+        answer = `
+        💼 <b>Placement Eligibility</b><br><br>
+        • Minimum 60% marks<br>
+        • No active backlogs<br>
+        • Good communication skills<br>
+        • Resume preparation required
+        `;
+    }
+
+    else if (q.includes("hostel")) {
+        answer = `
+        🏠 <b>Hostel Rules</b><br><br>
+        • Entry before 9:00 PM<br>
+        • ID card is compulsory<br>
+        • Visitors allowed only during visiting hours<br>
+        • Maintain cleanliness
+        `;
+    }
+
+    else if (q.includes("exam")) {
+        answer = `
+        📝 <b>Exam Information</b><br><br>
+        Semester exams begin from <b>10 December</b>.<br>
+        Hall tickets will be available one week before exams.
+        `;
+    }
+
+    else if (q.includes("fees") || q.includes("fee")) {
+        answer = `
+        💰 <b>Fee Information</b><br><br>
+        Please contact the Accounts Office or visit the college portal for fee details.
+        `;
+    }
+
+    else if (q.includes("attendance")) {
+        answer = `
+        📅 <b>Attendance Rule</b><br><br>
+        Students must maintain at least <b>75%</b> attendance to appear for exams.
+        `;
+    }
+
+    else if (q.includes("principal")) {
+        answer = `
+        👨‍🏫 Please visit the Administration Office to meet the Principal during office hours.
+        `;
+    }
+
+    else {
+        answer = `
+        🤖 Sorry, I don't have information about that.<br><br>
+        Please ask about:
+        <ul>
+            <li>Library</li>
+            <li>Placement</li>
+            <li>Hostel</li>
+            <li>Exams</li>
+            <li>Fees</li>
+            <li>Attendance</li>
+        </ul>
+        `;
+    }
+
+    // Show bot answer after 500ms
+    setTimeout(() => {
+
+        chatBox.innerHTML += `
+            <div class="bot-msg">
+                ${answer}
+            </div>
+        `;
+
+        // Scroll to latest message
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+    }, 500);
+
+    // Clear input
+    input.value = "";
+
+    // Scroll after user message
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Press Enter to send
+document.getElementById("question").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        ask();
+    }
+});
+        
+   </script>
+
+
+
+</body>
+</html>
